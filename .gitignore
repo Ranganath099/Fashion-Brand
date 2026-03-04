@@ -8,8 +8,8 @@ __pycache__/
 *.pyc
 
 # Django
-db.sqlite3
-media/
+# db.sqlite3
+# media/
 staticfiles/
 
 # Node
