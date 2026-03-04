@@ -4,7 +4,7 @@ const API = process.env.NEXT_PUBLIC_API_URL;
    PRODUCTS
 ========================= */
 export async function fetchProducts() {
-  const res = await fetch(`${API}/products/`, {
+  const res = await fetch(`${API}/api/products/`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch products");
@@ -12,7 +12,7 @@ export async function fetchProducts() {
 }
 
 export async function fetchProduct(slug) {
-  const res = await fetch(`${API}/products/${slug}/`, {
+  const res = await fetch(`${API}/api/products/${slug}/`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch product");
@@ -23,7 +23,7 @@ export async function fetchProduct(slug) {
    COLLECTIONS
 ========================= */
 export async function fetchCollections() {
-  const res = await fetch(`${API}/collection/`, {
+  const res = await fetch(`${API}/api/collection/`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch collections");
@@ -34,7 +34,7 @@ export async function fetchCollections() {
    AUTH (OTP)
 ========================= */
 export async function sendOTP(phone) {
-  const res = await fetch(`${API}/users/send-otp/`, {
+  const res = await fetch(`${API}/api/users/send-otp/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ phone }),
@@ -43,7 +43,7 @@ export async function sendOTP(phone) {
 }
 
 export async function verifyOTP(phone, otp) {
-  const res = await fetch(`${API}/users/verify-otp/`, {
+  const res = await fetch(`${API}/api/users/verify-otp/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ phone, otp }),
@@ -64,7 +64,7 @@ export async function removeCartItem(itemId) {
     return;
   }
 
-  await fetch(`${API}/cart/remove/${itemId}/`, {
+  await fetch(`${API}/api/cart/remove/${itemId}/`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ export async function updateCartItem(itemId, payload) {
   const token = localStorage.getItem("accessToken");
   if (!token) return;
 
-  await fetch(`${API}/cart/update/${itemId}/`, {
+  await fetch(`${API}/api/cart/update/${itemId}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export async function addToCart({ product, size, quantity }) {
   }
 
   // 🟢 LOGGED-IN USER → backend
-  await fetch(`${API}/cart/add/`, {
+  await fetch(`${API}/api/cart/add/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -159,7 +159,7 @@ export async function fetchCart() {
   }
 
   // 🟢 Logged-in user → backend cart
-  const res = await fetch(`${API}/cart/`, {
+  const res = await fetch(`${API}/api/cart/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -184,7 +184,7 @@ export async function fetchCart() {
 export async function createOrder() {
   const token = localStorage.getItem("accessToken");
 
-  return fetch(`${API}/orders/create/`, {
+  return fetch(`${API}/api/orders/create/`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -195,7 +195,7 @@ export async function createOrder() {
 export async function fetchMyOrders() {
   const token = localStorage.getItem("accessToken");
 
-  const res = await fetch(`${API}/orders/my-orders/`, {
+  const res = await fetch(`${API}/api/orders/my-orders/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
